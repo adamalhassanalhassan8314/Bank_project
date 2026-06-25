@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-qvomlhp45edsc_e&_zxd9hz=9+3dn(2x8@wohk=rjx4-_0rw-3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -52,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'Bank_project.urls'
@@ -121,7 +119,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # PAYSTACK_PUBLIC_KEY = "pk_test_07ee35d09c79bc7f98cb88bdf4064450614c361c"
 # PAYSTACK_SECRET_KEY = "sk_test_1a0481c8b27958ca58c031a76c5d252693839571"
