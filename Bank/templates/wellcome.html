@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .register{
+            display: flex;
+            gap: 100px;
+        
+        
+        }
+
+        .one, .two{
+    width: 200px;
+    height: 100px;
+    background-color: aliceblue;
+    border-radius: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    color: white;
+}
+        .coke{
+            justify-self: center;
+            text-align: center;
+            justify-items: center;
+        }
+
+        .come{
+            width: 600px;
+            justify-self: center;
+            align-items: center;
+            text-align: center;
+            justify-items: center;
+            color: indigo;
+        }
+
+        .link{
+        color: white;
+        }
+
+        /* h1{
+            color: white;
+        }
+        p{
+            color: white;
+        }
+        h4{
+            color: white;
+        } */
+.two{
+    
+    background: indigo;
+}
+
+.one{
+    background: white;
+}
+
+.network{
+    color: black;
+}
+
+    </style>
+
+
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    
+
+</head>
+<body class="d-flex justify-content-center flex-column align-items-center" style=" height:100vh; background: #f3f3f3;" >
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+
+             <div class="come">
+    <h5>Wellcome To </h5>
+    <h1>B2DATA</h1><BR></BR>
+    <h4>this is the best data app that will allow you to depesit any amount of money thaty you have and there is good authenticate in the solfwere, and you can buy data, airtime, and electricity instantly they will remove the money from your wallet and buy for you </h4>
+          </div> <br><br><br><br>
+
+    <div class="register">
+
+     <div class="one">
+        <a  href="{% url 'login' %}"
+        class="network"
+        >Login</a>
+     </div>
+
+     <div class="two">
+    
+        <a href="{% url 'register' %}"
+        class="link"
+        >Register</a>
+     </div>
+
+    </div>
+
+          
+
+    
+
+
+</body>
+</html>

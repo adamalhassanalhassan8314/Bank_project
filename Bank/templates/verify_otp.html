@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        .otp-container{
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .otp-input{
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            background-color:#f3f3f3;
+            color: black;
+        }
+     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="d-flex justify-content-center align-items-center bg-dark" style="height: 94vh; ">
+    
+       <div class="card main-card p-3 bg-white col-md-5" style="text-align: center; ">
+      <h2>ENTER OTP</h2><br>
+<form method ="POST">
+    {% csrf_token %}
+    <!-- <input type="text" name="otp" class="form-control p-3 mb-3" placeholder="6-digit OTP"> -->
+     <div class="otp-container">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="text" maxlength="1" class="otp-input">
+        <input type="hidden" name="otp" id="otp">
+     </div><br><br>
+    <button type="submit" style="background-color: indigo; width: 140px; color: white; border-radius: 5px;" class="p-3 mb-3">Send</button>
+
+</form>
+<p style="color: green;">{{error}}</p>
+
+       </div>
+
+       <script>
+
+const inputs = document.querySelectorAll('.otp-input');
+
+inputs.forEach((input, index) => {
+
+    // Move to next input
+    input.addEventListener('input', function() {
+        if (this.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+
+    // Move back on Backspace
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' &&
+            this.value === '' &&
+            index > 0) {
+
+            inputs[index - 1].focus();
+        }
+    });
+
+});
+
+// wannan yana nufin lokacin da aka danna submit, zai tattara dukkanin values na input din otp sannan ya saka a cikin hidden input din da ake tura form din 
+document.querySelector("form").addEventListener("submit", function() {
+
+    let otp = "";
+
+    document.querySelectorAll(".otp-input").forEach(function(input) {
+        otp += input.value;
+    });
+
+    document.getElementById("otp").value = otp;
+});
+
+</script>
+</script>
+</body>
+</html>

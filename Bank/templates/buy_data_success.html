@@ -1,0 +1,68 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successefull Data</title>
+
+    <style>
+       .container h2{
+            color: indigo;
+            font-size:60px;
+            font-weight: bold;
+            
+        }
+
+        .container p{
+            color: #666;
+            font-size: 30px
+        }
+
+        .container a{
+            font-size: 30px;
+            font-weight: bold;
+            color: indigo;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   
+
+</head>
+<body style="background-color:; align-items: center; justify-content: center;">
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+<div class="container text-center mt-5" style="">
+  <img src="/static/images/logo.png">
+
+  <br><br><br><br><br><br><br>
+    <h2> Data Purchase Successful</h2>
+    <br><br><br>
+
+    <p>Your data has been delivered successfully.</p>
+
+    <br><br><br><br>
+
+    <a href="{% url 'dashboard' %}">
+        Dismiss
+    </a>
+
+</div>
+
+{% endblock %}
+    
+</body>
+</html>

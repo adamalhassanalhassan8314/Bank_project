@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity</title>
+
+    <style>
+        body{
+    background:#fff;
+    font-family:Arial,sans-serif;
+    padding:20px;
+}
+
+.input-group{
+    margin-bottom:25px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:10px;
+    font-size:18px;
+}
+
+.input-group input,
+.input-group select{
+    width:100%;
+    height:70px;
+    border:2px solid #ddd;
+    border-radius:20px;
+    padding:0 20px;
+    font-size:22px;
+}
+
+.meter-type{
+    display:flex;
+    gap:20px;
+    margin:30px 0;
+}
+
+.btn-type{
+    flex:1;
+    text-align:center;
+    padding:20px;
+    border:3px solid #1d2786;
+    border-radius:40px;
+    font-size:24px;
+    font-weight:bold;
+    color:indigo;
+    cursor:pointer;
+}
+
+input[type="radio"]:checked + .btn-type{
+    background:indigo;
+    color:white;
+}
+
+.next-btn{
+    width:100%;
+    height:80px;
+    border:none;
+    border-radius:20px;
+    background:indigo;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+    margin-top:30px;
+}
+    </style>
+</head>
+<body>
+   <form method="POST">
+    {% csrf_token %}
+
+    <!-- Company -->
+    <div class="input-group">
+        <label>Select Biller</label>
+        <select name="company">
+            <option value="04">Kano Electric</option>
+            <option value="01">Eko Electric</option>
+            <option value="02">Ikeja Electric</option>
+            <option value="03">Abuja Electric</option>
+        </select>
+    </div>
+
+    <!-- Meter Type -->
+    <div class="meter-type">
+        <input type="radio" name="meter_type" value="02" id="postpaid" checked hidden>
+        <label for="postpaid" class="btn-type">POSTPAID</label>
+
+        <input type="radio" name="meter_type" value="01" id="prepaid" hidden>
+        <label for="prepaid" class="btn-type">PREPAID</label>
+    </div>
+
+    <!-- Meter Number -->
+    <div class="input-group">
+        <label>Meter Number</label>
+        <input type="text"
+               name="meter_no"
+               placeholder="Meter Number">
+    </div>
+
+    <!-- Amount -->
+    <div class="input-group">
+        <input type="number"
+               name="amount"
+               placeholder="Amount">
+    </div>
+
+    <button type="submit" class="next-btn">
+        Next
+    </button>
+
+</form>
+
+
+</body>
+</html>

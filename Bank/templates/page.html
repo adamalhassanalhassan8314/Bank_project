@@ -1,0 +1,185 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            margin: 0;
+            font-family: sans-serif;
+            background-color:
+
+        }
+        .container{
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide{
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .slide.active{
+          display: block;
+
+        }
+
+        .slide img{
+            width: 900px;
+            margin-top: 30px;
+            border-radius: 10px;
+
+        }
+
+        .slide h1{
+            font-size: 45px;
+            color: white;
+
+        }
+
+        .slide p{
+            font-size: 20px;
+            color: white;
+
+        }
+
+        .bottom{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 30px;
+        }
+
+        .dots{
+            display: flex;
+            gap: 12px;
+        }
+        
+      .dot{
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #c0c0c0;
+      }
+
+      .dot.active{
+        background: black;
+      }
+
+      #nextBtn{
+        width: 80px;
+        height: 80px;
+        border: none;
+        border-radius: 50%;
+        background: #c0c0c0;
+        color: black;
+        font-size: 40px;
+      }
+    </style>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+   
+
+   
+</head>
+<body style="background-color: indigo">
+    
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+ <div class="container">
+    <div class="slides">
+        <div class="slide active" style="justify-self: center; border-radius: 20px;">
+            <img src="{% static 'images/oneofone1.png' %}" width="1500" >
+
+            <h1 style="color: white; justify-self: center;">Automated Delivery</h1>
+
+            <p style="color: white; justify-self: center;">
+                Affordable MTN data, Gotv DSTV and Electricity Bills
+            </p>
+
+        </div>
+
+        <div class="slide">
+             <img src="{% static 'images/oneofone2.png' %}" width="1000">
+            <h1>Airtime Solution</h1>
+
+            <p>
+                Purchase airtime easily
+            </p>
+
+        </div>
+
+        <div class="slide">
+            <img src="{% static 'images/oneofone3.png' %}" width="600">
+            <h1>Customer Support</h1>
+
+            <p>
+                48/7 customer support
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="bottom">
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+
+        </div>
+
+        <button id="nextBtn">
+               ✓
+        </button>
+         
+    </div>
+
+ </div>
+
+<script>
+    let current = 0;
+
+    let slides = document.querySelectorAll(".slide");
+    let dots = document.querySelectorAll(".dot");
+
+    let btn = document.getElementById("nextBtn");
+
+    btn.onclick = function () {
+
+        slides[current].classList.remove("active");
+        dots[current].classList.remove("active");
+
+        current++;
+
+        if (current >= slides.length) {
+            window.location.href = "/wellcome/";
+            return;
+        }
+
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+
+        if (current === slides.length - 1) {
+            btn.innerHTML = "✓";
+        }
+    };
+</script>
+
+</body>
+</html>

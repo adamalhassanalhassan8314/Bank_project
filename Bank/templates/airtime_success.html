@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* .one{
+            width: 500px;
+            height: 200px;
+            background-color: white;
+            color: indigo;
+            justify-self: center;
+            align-items: center;
+        } */
+
+
+        .overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.4);
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+/* .success-card{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:25px 25px 0 0;
+    padding:40px;
+    text-align:center;
+
+    animation:slideUp .4s ease;
+} */
+
+.success-card{
+    width: 800px;
+    height: 800px;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 25px;
+    text-align: center;
+}
+
+/* .success-icon{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:#22c55e;
+    color:white;
+    font-size:50px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:auto;
+} */
+
+.success-icon{
+    width:300px;
+    height:200px;
+    border-radius:50%;
+    background:#22c55e;
+    color:white;
+    font-size:70px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:auto;
+}
+.success-card h1{
+    font-size: 20px;
+    margin-top: 20px;
+}
+.success-card p{
+    font-size: 60px;
+    color:#666;
+}
+@keyframes slideUp{
+    from{
+        transform:translateY(100%);
+    }
+
+    to{
+        transform:translateY(0);
+    }
+}
+.button{
+    font-size: 60px;
+    background-color: indigo;
+    color: white;
+    border-radius: 10px;
+}
+    </style>
+</head>
+<body style="">
+
+
+    <!-- <div class="one">
+        <p>Airtime Successfull</p>
+
+        <br><br><br><br><br>
+
+
+            <div style="width: 100px; height: 80px; background-color: indigo; color: white;">
+        <a href="{% url 'dashboard' %}">Go Bank</a>
+        </div>
+    </div> -->
+    
+
+<div class="overlay" id="successModal">
+
+    <div class="success-card">
+
+        <div class="success-icon">✓</div>
+
+        <h3>Successful</h3>
+
+        <p>Airtime Purchase Successful</p>
+
+        <button onclick="closeModal()" class="button">
+            Done
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+function closeModal(){
+    document.getElementById(
+        "successModal"
+    ).style.display = "none";
+}
+
+</script>
+</body>
+</html>

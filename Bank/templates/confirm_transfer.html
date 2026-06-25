@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>confirm Transfer</title>
+    <style>
+     .top{
+        justify-self: center;
+        width: 500px;
+        height: 500px;
+        background-color: white;
+     }
+    </style>
+</head>
+<body>
+    
+    <p>is this correct account name?</p>
+    <div class="top">
+  <h2>Confirm Transfer</h2>
+
+  <div class="design">
+<h3>
+    {{ account_name }}
+</h3>
+</div>
+
+<div class="design">
+<h3>
+    ₦{{ amount }}
+</h3>
+</div>
+
+<a href="{% url 'enter_pin' %}">
+    Continue
+</a>
+
+</body>
+</html>

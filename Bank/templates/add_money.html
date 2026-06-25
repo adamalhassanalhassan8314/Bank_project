@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+          background: #f3f3f3;
+        }
+
+
+        .container{
+            width: 1000px;
+            border: 1px solid;
+            padding: 10px;
+            margin: 10px;
+            justify-content: space-between;
+            gap: 20px;
+            border: none;
+            background-color: white;
+            border-radius: 10px;
+            
+            
+            
+        }
+
+        .hajara{
+            width: 100px;
+            height: 100px;
+            font-size: large;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px;
+            border-color: green;
+        }
+
+        .one{
+            justify-self: center;
+            text-align: center;
+
+        }
+        input{
+            width: 1000px;
+            height: 100px;
+            font-size: large;
+            text-align: center;
+            background: white;
+            
+            
+        }
+    </style>
+</head>
+<body>
+             <div class="one">
+    <form method="POST">
+        {% csrf_token %}
+
+               
+        <input type="text" name="amount" placeholder = "Enter Amount"><br><br>
+
+        <div class="container">
+        <div class="hajara"> onclick="document.querySelector('input[name=amount]').value = 500">500</div>
+         <di class="button">onclick="document.querySelector('input[name=amount]').value = 1000">1000</div>
+        <div class="button"> onclick="document.querySelector('input[name=amount]').value = 1500">1500 </div>
+        <button onclick="document.querySelector('input[name=amount]').value = 2000">2000</button>
+    
+        
+        </div>
+        <br><br>
+        
+        <button type = "submit" style="width: 500px; background-color: indigo; color: white;"> Add Money</button>
+
+    </form>
+              </div>
+
+
+
+    
+</body>
+</html>
