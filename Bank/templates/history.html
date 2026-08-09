@@ -1,0 +1,236 @@
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+
+body{
+    margin:0;
+    background:#f5f6fb;
+    font-family:Arial,sans-serif;
+}
+
+.header{
+
+    background:indigo;
+
+    color:white;
+
+    padding:25px;
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.container{
+
+    width:95%;
+    max-width:900px;
+
+    margin:25px auto;
+
+}
+
+.transaction{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.left{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+}
+
+.icon{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    background:#ede9fe;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.icon i{
+
+    color:indigo;
+
+    font-size:25px;
+
+}
+
+.type{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+.receiver{
+
+    color:#666;
+
+    margin-top:4px;
+
+}
+
+.right{
+
+    text-align:right;
+
+}
+
+.amount{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+.success{
+
+    color:green;
+
+    font-size:15px;
+
+}
+
+.date{
+
+    color:#888;
+
+    font-size:13px;
+
+}
+
+.empty{
+
+    text-align:center;
+
+    margin-top:80px;
+
+    color:#777;
+
+}
+
+</style>
+
+</head>
+<body>
+
+{% for transaction in transactions %}
+
+<a href="{% url 'transaction_detail' transaction.id %}"
+   class="transaction"
+   style="text-decoration:none;color:inherit;">
+
+    <div class="left">
+
+        <div class="icon">
+
+            {% if transaction.transactiontype == "Airtime" %}
+                <i class="bi bi-telephone-fill"></i>
+
+            {% elif transaction.transactiontype == "Data" %}
+                <i class="bi bi-wifi"></i>
+
+            {% elif transaction.transactiontype == "Cable" %}
+                <i class="bi bi-tv-fill"></i>
+
+            {% elif transaction.transactiontype == "Electricity" %}
+                <i class="bi bi-lightning-fill"></i>
+
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            <div class="type">
+                {{ transaction.transactiontype }}
+            </div>
+
+            <div class="receiver">
+
+                {% if transaction.network %}
+                    {{ transaction.network }} <br>
+                {% endif %}
+
+                {{ transaction.receiver }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="right">
+
+        <div class="amount">
+            ₦{{ transaction.amount }}
+        </div>
+
+        <div class="success">
+            {{ transaction.status }}
+        </div>
+
+        <div class="date">
+            {{ transaction.created_at|date:"M d, Y, g:i A" }}
+        </div>
+
+    </div>
+
+</a>
+
+{% empty %}
+
+<div class="empty">
+
+    <h2>No Transaction Yet</h2>
+
+    <p>Your transaction history will appear here.</p>
+
+</div>
+
+{% endfor %}
+</body>
+</html>

@@ -62,22 +62,65 @@ path(
 ),
 
 path(
+    "transaction/<int:id>/",
+    views.transaction_detail,
+    name="transaction_detail"
+),
+
+path(
+    "receipt/<int:id>/",
+    views.download_receipt,
+    name="download_receipt"
+),
+
+path(
     "buy_data_success/",
     views.buy_data_success,
     name="buy_data_success"
 ),
 
+path(
+    "edit-profile/",
+    views.edit_profile,
+    name="edit_profile"
+),
+
+path(
+    "reset-pin/",
+    views.reset_pin,
+    name="reset_pin"
+),
+
+path(
+    "change-password/",
+    views.change_password,
+    name="change_password"
+),
+
+path(
+    "privacy_policy/",
+    views.privacy_policy,
+    name="privacy_policy"
+),
+
+path('about-B2DATA/', views.about, name='about-B2DATA'),
+path('terms_conditions/', views.terms_conditions, name='terms_conditions'),
+path('contact-support/', views.contact_support, name='contact_support'),
+path('help-center/', views.help_center, name='help_center'),
+path('con/', views.logout_view, name='logout'),
+path('logout/', views.logout_view, name='logout'),
 path('confirm_airtime/', views.confirm_airtime, name= "confirm_airtime"),
 path('confirm-success/', views.airtime_success, name= "confirm_success"),
 path('buy_airtime/', views.buy_airtime, name= "buy_airtime"),
 path('airtime_success/', views.airtime_success, name= "airtime_success"),
 
 path('confirm_electricity/', views.confirm_electricity, name= "confirm_electricity"),
-
-
-
-
+path('content/', views.content, name= "content"),
+path('bonus/', views.bonus, name= "bonus"),
+path('history/', views.history, name= "history"),
+path('change-photo/', views.change_photo, name= "change_photo"),
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -66,13 +66,13 @@
 <bodystyle="background-color: white;>
 
 
-    
+    ₦{{ wallet.balance }}
      <h3>Transfer Your money now</h3>
     <div class="top">
 <form method="POST">
 
     {% csrf_token %}
-
+ 
     <div class="account">
     <input type="text"
     name="account_number"

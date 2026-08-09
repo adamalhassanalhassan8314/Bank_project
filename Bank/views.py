@@ -15,6 +15,13 @@ from django.http import JsonResponse
 import uuid
 import json
 
+# all this is for download pdf amma dole saikai ## pip install reportlab
+
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph
+from django.contrib.auth import update_session_auth_hash
 
 
 
@@ -101,9 +108,9 @@ def user_login(request):
     return render(request, 'login.html') 
 
 
-def user_logout(request):
+def logout_view(request):
     logout(request)
-    return redirect ('login')
+    return redirect("login")
 
 
 
@@ -325,243 +332,6 @@ def buy_data(request):
         context
     )
 
-# @login_required
-# def confirm_data(request):
-
-#     network = request.session.get("network")
-#     phone = request.session.get("phone")
-#     plan_id = request.session.get("plan_id")
-#     plan_name = request.session.get('plan_name')
-    
-#     amount = Decimal(
-#     request.session.get("amount", "0")
-# )
-    
-#     if request.method == "POST":
-
-#         pin = request.POST.get("pin")
-
-#         profile = Profile.objects.get(
-#             user=request.user
-#         )
-
-#         if profile.pin != pin:
-
-#             messages.error(
-#                 request,
-#                 "Incorrect PIN"
-#             )
-
-#             print("AMOUNT FROM FORM =", amount)
-
-#             return redirect("confirm_data")
-
-#         wallet = Wallet.objects.get(
-#             user=request.user
-#         )
-
-#         if wallet.balance < amount:
-
-#             messages.error(
-#                 request,
-#                 "Insufficient Balance"
-#             )
-
-#             return redirect("confirm_data")
-
-#         url = (
-#             "https://www.nellobytesystems.com/APIDatabundleV1.asp"
-#         )
-#         network_map = {
-#             "MTN": "01",
-#             "GLO": "02",
-#             "9MOBILE": "03",
-#             "AIRTEL": "04",
-#         }
-
-#         network_id = network_map.get(network)
-
-#         params = {
-
-#             "UserID": "CK101279181",
-
-#             "APIKey": "147F000GH4393J5U15J9R6XAJI1WXC27276T73SS8K655PUQMZ4KV8P53OIRBB6Z",
-
-#             "MobileNetwork": network_id,
-
-#             "DataPlan": plan_id,
-
-#             "MobileNumber": phone,
-
-#             "RequestID": str(
-#                 request.user.id
-#             )
-#         }
-
-#         response = requests.get(
-#             url,
-#             params=params
-#         )
-
-#         data = response.json()
-
-#         print(data)
-
-#         if data.get("status") == "ORDER_RECEIVED":
-
-#             wallet.balance -= Decimal(amount)
-
-#             wallet.save()
-
-#             return redirect(
-#                 "buy_data_success"
-#             )
-
-#         else:
-
-#             messages.error(
-#                 request,
-#                 data.get(
-#                     "status",
-#                     "Transaction Failed"
-#                 )
-#             )
-#             print("NETWORK =", network)
-#             print("PLAN ID =", plan_id)
-#             print("PLAN NAME =", plan_name)
-#             print("AMOUNT =", amount)
-
-#             return redirect(
-#                 "confirm_data"
-#             )
-
-#     context = {
-
-#         "network": network,
-
-#         "phone": phone,
-
-#         "plan": plan_id,
-
-#         "amount": amount,
-
-#         "plan_name": plan_name
-#     }
-
-#     return render(
-#         request,
-#         "confirm_data.html",
-#         context
-#     )
-
-
-    # network = request.session.get("network")
-    # phone = request.session.get("phone")
-    # plan_id = request.session.get("plan_id")
-    # plan_name = request.session.get("plan_name")
-
-    # amount = Decimal(
-    #     request.session.get("amount", "0")
-    # )
-
-    # if request.method == "POST":
-
-    #     pin = request.POST.get("pin")
-
-    #     profile = Profile.objects.get(
-    #         user=request.user
-    #     )
-
-    #     if profile.pin != pin:
-    #         messages.error(
-    #             request,
-    #             "Incorrect PIN"
-    #         )
-    #         return redirect("confirm_data")
-
-    #     wallet = Wallet.objects.get(
-    #         user=request.user
-    #     )
-
-    #     if wallet.balance < amount:
-    #         messages.error(
-    #             request,
-    #             "Insufficient Balance"
-    #         )
-    #         return redirect("confirm_data")
-
-    #     network_map = {
-    #         "MTN": "01",
-    #         "GLO": "02",
-    #         "9MOBILE": "03",
-    #         "AIRTEL": "04",
-    #     }
-
-    #     network_id = network_map.get(network)
-
-    #     print("NETWORK =", network)
-    #     print("NETWORK ID =", network_id)
-    #     print("PLAN ID =", plan_id)
-    #     print("PHONE =", phone)
-    #     print("AMOUNT =", amount)
-        
-
-    #     url = "https://www.nellobytesystems.com/APIDatabundleV1.asp"
-
-    #     params = {
-    #         "UserID": "YOUR_USER_ID",
-    #         "APIKey": "YOUR_API_KEY",
-    #         "MobileNetwork": network_id,
-    #         "DataPlan": plan_id,
-    #         "MobileNumber": phone,
-    #         "RequestID": f"{request.user.id}-{phone}"
-    #     }
-
-    #     response = requests.get(
-    #         url,
-    #         params=params,
-    #         timeout=30
-    #     )
-
-    #     print("URL =", response.url)
-    #     print("TEXT =", response.text)
-
-        # data = response.json()
-
-    #     if data.get("status") == "ORDER_RECEIVED":
-
-    #         wallet.balance -= amount
-    #         wallet.save()
-
-    #         return redirect(
-    #             "buy_data_success"
-    #         )
-
-    #     messages.error(
-    #         request,
-    #         data.get(
-    #             "status",
-    #             "Transaction Failed"
-    #         )
-    #     )
-
-    #     return redirect(
-    #         "confirm_data"
-    #     )
-
-    # context = {
-    #     "network": network,
-    #     "phone": phone,
-    #     "plan": plan_id,
-    #     "amount": amount,
-    #     "plan_name": plan_name,
-    # }
-
-    # return render(
-    #     request,
-    #     "confirm_data.html",
-    #     context
-    # )
 
 
 @login_required
@@ -625,7 +395,7 @@ def confirm_data(request):
 
         params = {
             "UserID": "CK101279181",
-            "APIKey": "A3O16I4GBW1Z6767JJ8K29L4U9R4Q320801GOQZV0LJ7DQ4FWQ8A475V0WE0BM34",
+            "APIKey": "98QM7PHX3WLE2U3ZQ40180KM1IIT4D5EM99Y04H1JRBB356EVB2CX2T38825G383",
             "MobileNetwork": network_id,
             "DataPlan": plan_id,
             "MobileNumber": phone,
@@ -653,6 +423,17 @@ def confirm_data(request):
 
             wallet.balance -= amount
             wallet.save()
+
+            Transaction.objects.create(
+                    user=request.user,
+                    amount=amount,
+                    transactiontype="Data",
+                    network=network,
+                    receiver=phone,
+                    reference=data.get("reference"),
+                    status="Successful",
+                )
+            
 
             messages.success(
                 request,
@@ -909,6 +690,11 @@ def transfer_money(request):
         "https://api.flutterwave.co/transfer"
     )
 
+    profile = Profile.objects.get(user=request.user)
+
+    wallet, created = Wallet.objects.get_or_create(
+        user=request.user
+    )
 
     transfer_data = {
 
@@ -991,8 +777,11 @@ def transfer_money(request):
             request,
             "Transfer Failed"
         )
-
-        return redirect("transfer")
+    context = {
+     "profile": profile,
+     "wallet": wallet
+    }
+    return redirect("transfer", context)
     
 @login_required
 def enter_pin(request):
@@ -1071,8 +860,6 @@ def put_pin(request):
 
 def cable(request):
     return render(request, 'cable.html')
-def electricity(request):
-    return render(request, 'electricity.html')
 def international_airtime(request):
     return render(request, 'international.html')
 def Edu_pin (request):
@@ -1089,6 +876,11 @@ def airtime_swap(request):
 
 def top_up(request):
     return render(request, 'top_up.html')
+def bonus(request):
+    return render(request, "bonus.html")
+def history(request):
+    return render(request, "history.html")
+
 
 
 @login_required
@@ -1100,10 +892,23 @@ def transfer_success(request):
     )
 
 
+
+@login_required
 def airtime_success(request):
+
+    transaction = Transaction.objects.filter(
+        user=request.user,
+        transactiontype="Airtime"
+    ).order_by("-created_at").first()
+
+    context = {
+        "transaction": transaction
+    }
+
     return render(
         request,
-        "airtime_success.html"
+        "airtime_success.html",
+        context
     )
 
 
@@ -1137,28 +942,6 @@ def buy_airtime(request):
 
 
 
-
-# def airtime(request):
-
-#     phone = request.session.get("phone")
-#     network = request.session.get("network")
-
-#     if request.method == "POST":
-
-#         amount = request.POST.get("amount")
-       
-
-#         request.session["amount"] = amount
-        
-#         return redirect("confirm_airtime")
-
-#     context = {
-#         "phone": phone,
-#         "network": network
-#     }
-
-#     return render(request, "airtime.html", context)
-
 @login_required
 def airtime(request):
 
@@ -1171,7 +954,7 @@ def airtime(request):
         "03": "GLO",
         "04": "9MOBILE"
     }
-
+    wallet = Wallet.objects.get(user=request.user)
     network_name = networks.get(network, network)
 
     if request.method == "POST":
@@ -1185,6 +968,7 @@ def airtime(request):
     context = {
         "phone": phone,
         "network": network_name,
+        "wallet": wallet
     }
 
     return render(
@@ -1235,6 +1019,7 @@ def confirm_airtime(request):
             user=request.user
         )
 
+         
         amount_decimal = Decimal(amount)
 
         if wallet.balance < amount_decimal:
@@ -1250,7 +1035,7 @@ def confirm_airtime(request):
 
         params = {
             "UserID": "CK101279181",
-            "APIKey": "3YI15VLJ1Y2OS32P5026P6YX561271FO3BA02E9WBK8UITNL39Q36K3U6CAT10I3",
+            "APIKey": "6ZX786W1JMIN2ENEA4GO5LG07K81B7P37GN20GMQA0R0VJ80261241T3X2RU2Q79",
             "MobileNetwork": network,
             "Amount": amount,
             "MobileNumber": phone,
@@ -1269,6 +1054,16 @@ def confirm_airtime(request):
 
             wallet.balance -= amount_decimal
             wallet.save()
+
+            Transaction.objects.create(
+                    user=request.user,
+                    amount=amount,
+                    transactiontype="Airtime",
+                    network=network_name,
+                    receiver=phone,
+                    reference=data.get("reference"),
+                    status="Successful",
+                )
 
             messages.success(
                 request,
@@ -1369,11 +1164,6 @@ def cable(request):
     )
 
 
-
-from decimal import Decimal
-from django.contrib import messages
-
-
 @login_required
 def confirm_cable(request):
 
@@ -1454,6 +1244,15 @@ def confirm_cable(request):
 
             wallet.save()
 
+            Transaction.objects.create(
+                user=request.user,
+                amount=amount,
+                transactiontype="Cable",
+                network=cabletv,
+                receiver=smartcard,
+                reference=data.get("reference"),
+                status="Successful",
+               )
             messages.success(
                 request,
                 "Cable Subscription Successful"
@@ -1498,178 +1297,641 @@ def confirm_cable(request):
     )
 
 
-# def create_transaction(request):
-#     Transaction.objests.create(
-#         user = request.user,
-#         amount=amount,
-#         transactiontype="Transfer",
-#         sender = request.user.username,
-#         reciever = account_name,
-#         bank_name = bank_name,
-#         account_number = account_number,
-#         reference = reference,
-#         description = "Bank Transfer"
-#         Status = "Success"
 
+
+
+
+# def electricity(request):
+#     if request.method=="POST":
+
+#         company = request.POST.get('company')
+#         meter_type = request.POST.get('meter_type')
+#         meter_no = request.POST.get('meter_no')
+#         phone = request.POST.get('phone')
+#         amount = request.POST.get('amount')
+#         customer_name = request.POST.get('custormer_name')
+
+
+
+
+#         request.session["company"] = company
+#         request.session["meter_type"] = meter_type
+#         request.session["meter_no"] = meter_no
+#         request.session["phone"] = phone
+#         request.session["amount"] = amount
+#         request.session["customer_name"] = customer_name
+       
+
+#         return redirect ('confirm_electricity')
+    
+#     return render(request, "electricity.html")
+
+
+
+
+
+
+# @login_required
+# def confirm_electricity(request):
+
+#     company = request.session.get("company")
+#     meter_type = request.session.get("meter_type")
+#     meter_no = request.session.get("meter_no")
+#     phone = request.session.get("phone")
+#     amount = request.session.get("amount")
+#     customer_name = request.session.get("customer_name")
+
+#     if request.method == "POST":
+
+#         pin = request.POST.get("pin")
+
+#         profile = Profile.objects.get(
+#             user=request.user
+#         )
+
+#         if profile.pin != pin:
+
+#             messages.error(
+#                 request,
+#                 "INVALID PIN"
+#             )
+
+#             return redirect(
+#                 "confirm_electricity"
+#             )
+
+#         wallet = Wallet.objects.get(
+#             user=request.user
+#         )
+
+#         amount_decimal = Decimal(amount)
+
+#         if wallet.balance < amount_decimal:
+
+#             messages.error(
+#                 request,
+#                 "INSUFFICIENT BALANCE"
+#             )
+
+#             return redirect(
+#                 "confirm_electricity"
+#             )
+
+#         url = "https://www.nellobytesystems.com/APIElectricityV1.asp"
+
+
+#         profile = Profile.objects.get(
+#              user=request.user
+#          )
+#         phone = profile.phone
+
+#         params = {
+#             "UserID": "CK101279181",
+#             "APIKey": "08EOIW2O832323D6I47D7643W3HX0V3SERO2U9A5ZX1JKTQ4M5ST7VSN94L777E5",
+#             "ElectricCompany": company,
+#             "MeterType": meter_type,
+#             "MeterNo": meter_no,
+#             "Amount": amount,
+#             "PhoneNo": phone,
+#             "RequestID": f"{request.user.id}-{meter_no}"
+#         }
+
+#         response = requests.get(
+#             url,
+#             params=params
+#         )
+
+#         data = response.json()
+
+#         print(data)
+
+#         if data.get("status") == "ORDER_RECEIVED":
+
+#             wallet.balance -= amount_decimal
+#             wallet.save()
+
+#             messages.success(
+#                 request,
+#                 "Electricity Bill Successful"
+#             )
+
+#             return redirect(
+#                 "electricity_success"
+#             )
+
+#         messages.error(
+#             request,
+#             data.get(
+#                 "status",
+#                 "Transaction Failed"
+#             )
+#         )
+
+#         return redirect(
+#             "confirm_electricity"
+#         )
+
+#     context = {
+#         "company": company,
+#         "meter_type": meter_type,
+#         "meter_no": meter_no,
+#         "phone": phone,
+#         "amount": amount,
+#         "customer_name": customer_name,
+#     }
+
+#     return render(
+#         request,
+#         "confirm_electricity.html",
+#         context
 #     )
 
 
-# def create_transaction(request):
-#     Transaction.objects.create(
-#     user=request.user,
-#     amount=amount,
-#     transactiontype="Transfer",
-#     sender=request.user.username,
-#     reciever=account_name,
-#     account_number=account_number,
-#     reference=reference,
-# )
 
 
+def verify_meter(request):
+
+    company = request.GET.get("company")
+    meter_type = request.GET.get("meter_type")
+    meter_no = request.GET.get("meter_no")
+
+    url = "https://www.nellobytesystems.com/APIVerifyElectricityV1.asp"
+
+    params = {
+        "UserID": "CK101279181",
+        "APIKey": "YOUR_API_KEY",
+        "ElectricCompany": company,
+        "MeterType": meter_type,
+        "MeterNo": meter_no,
+    }
+
+    response = requests.get(url, params=params)
+
+    data = response.json()
+
+    return JsonResponse(data)
+    
 
 
 def electricity(request):
-    if request.method=="POST":
-
+    if request.method =="POST":
         company = request.POST.get('company')
         meter_type = request.POST.get('meter_type')
         meter_no = request.POST.get('meter_no')
-        phone = request.POST.get('phone')
         amount = request.POST.get('amount')
-        customer_name = request.POST.get('custormer_name')
+        
 
 
+        request.session['company']= company
+        request.session['meter_type'] = meter_type
+        request.session['meter_no']= meter_no
+        request.session['amount']= amount
+
+        url = "https://www.nellobytesystems.com/APIVerifyElectricityV1.asp"
+
+        params = {
+        "UserID": "CK101279181",
+        "APIKey": "YOUR_API_KEY",
+        "ElectricCompany": company,
+        "MeterType": meter_type,
+        "MeterNo": meter_no,
+        "amount": "amont"
+        }
+
+        response = requests.get(url, params=params)
+
+        data = response.json()
+        return JsonResponse(data)
+
+        return redirect("confirn_electricy")
+    return render(request, electricity.html)
 
 
-        request.session["company"] = company
-        request.session["meter_type"] = meter_type
-        request.session["meter_no"] = meter_no
-        request.session["phone"] = phone
-        request.session["amount"] = amount
-        request.session["customer_name"] = customer_name
-       
+def confirm_electricity(request):
+    company = request.session.get('company')
+    meter_type = request.session.get('meter_type')
+    meter_no = request.session.get('meter_no')
+    amount = request.session.get('amount')
 
-        return redirect ('confirm_electricity')
+    if request.method == "POST":
+         pin = request.POST.get('pin')
+         profile = Profile.objects.get(
+            user=request.user
+            )
+         if profile.pin != pin:
+             
+             messages.error(
+                 request, "INVALID PIN"
+             )
+
+             return redirect(
+                 confirm_electricity
+             )
+         wallet = Wallet.objects.get(
+             user= request.user
+         )
+
+         amount_decimal = Decimal(amount)
+
+         if wallet.balance < amount_decimal:
+             messages.error(
+                 request, "INSUFFICIENT BALANCE"
+             )
+
+             return redirect('confirm_electricity')
+         
+         profile = Profile.objects.get(
+             user= request.user
+         )
+         phone = request.t
+         url =""
+         params ={
+             "UserID": "",
+             "APIkey": "",
+             "company": company,
+             "meter_type": meter_type,
+             "meter_no": meter_no,
+             "amount": amount,
+             
+         }
+
+         response = requests.get(url, params=params)
+         data = response.json()
+         return JsonResponse(data)
     
-    return render(request, "electricity.html")
+    context={
+        "company": company,
+        "meter_type": meter_type,
+        "meter_no": meter_no,
+        "amount": amount,
+        "wallet": wallet,
+
+    },
+
+    return render(request, "confirm_electricity", context)
 
 
+         
+
+
+@login_required
+def content(request):
+
+    profile = request.user.profile
+    wallet = request.user.wallet
+
+    context = {
+        "profile": profile,
+        "wallet": wallet,
+    }
+
+    return render(request, "content.html", context)
+
+# @login_required
+# def change_photo(request):
+
+#     profile = request.user.profile
+
+#     if request.method == "POST":
+
+#         if "image" in request.FILES:
+
+#             profile.image = request.FILES["image"]
+
+#             profile.save()
+
+#             messages.success(
+#                 request,
+#                 "Profile photo updated successfully."
+#             )
+
+#             return redirect("content")
+
+#     return render(request, "change_photo.html")
+
+
+@login_required
+def change_photo(request):
+
+    profile = request.user.profile
+
+    if request.method == "POST":
+
+        if "image" in request.FILES:
+
+            profile.image = request.FILES["image"]
+            profile.save()
+
+            messages.success(
+                request,
+                "Profile picture updated successfully."
+            )
+
+            return redirect("content")
+
+    return render(request, "change_photo.html")
+
+
+@login_required
+def history(request):
+
+    transactions = Transaction.objects.filter(
+        user=request.user
+    ).order_by("-created_at")
+
+    context = {
+        "transactions": transactions
+    }
+
+    return render(request, "history.html", context)
+
+    from django.shortcuts import get_object_or_404
+
+@login_required
+def transaction_detail(request, id):
+
+    transaction = get_object_or_404(
+        Transaction,
+        id=id,
+        user=request.user
+    )
+
+    context = {
+        "transaction": transaction
+    }
+
+    return render(
+        request,
+        "transaction_detail.html",
+        context
+    )
+
+
+
+from django.shortcuts import get_object_or_404
+
+@login_required
+def transaction_detail(request, id):
+
+    transaction = get_object_or_404(
+        Transaction,
+        id=id,
+        user=request.user
+    )
+
+    context = {
+        "transaction": transaction
+    }
+
+    return render(
+        request,
+        "transaction_detail.html",
+        context,
+
+    )
+
+
+
+@login_required
+def download_receipt(request, id):
+
+    transaction = get_object_or_404(
+        Transaction,
+        id=id,
+        user=request.user
+    )
+
+    response = HttpResponse(
+        content_type="application/pdf"
+    )
+
+    response["Content-Disposition"] = (
+        f'attachment; filename="Receipt_{transaction.id}.pdf"'
+    )
+
+    doc = SimpleDocTemplate(response)
+
+    styles = getSampleStyleSheet()
+
+    elements = []
+
+    elements.append(
+        Paragraph("<b>B2DATA TRANSACTION RECEIPT</b>", styles["Title"])
+    )
+
+    elements.append(
+        Paragraph("<br/><br/>", styles["Normal"])
+    )
+
+    data = [
+
+        ["Transaction Type", transaction.transactiontype],
+
+        ["Amount", f"₦{transaction.amount}"],
+
+        ["Network", transaction.network],
+
+        ["Receiver", transaction.receiver],
+
+        ["Reference", transaction.reference],
+
+        ["Status", transaction.status],
+
+        ["Date", transaction.created_at.strftime("%d %B %Y %I:%M %p")],
+
+    ]
+
+    table = Table(data, colWidths=[180, 250])
+
+    table.setStyle(
+
+        TableStyle([
+
+            ("GRID",(0,0),(-1,-1),1,colors.grey),
+
+            ("BACKGROUND",(0,0),(0,-1),colors.HexColor("#ede9fe")),
+
+            ("TEXTCOLOR",(0,0),(0,-1),colors.indigo),
+
+            ("FONTNAME",(0,0),(-1,-1),"Helvetica-Bold"),
+
+            ("BOTTOMPADDING",(0,0),(-1,-1),10),
+
+        ])
+
+    )
+
+    elements.append(table)
+
+    doc.build(elements)
+
+    return response
 
 
 
 
 @login_required
-def confirm_electricity(request):
+def edit_profile(request):
 
-    company = request.session.get("company")
-    meter_type = request.session.get("meter_type")
-    meter_no = request.session.get("meter_no")
-    phone = request.session.get("phone")
-    amount = request.session.get("amount")
-    customer_name = request.session.get("customer_name")
+    profile = request.user.profile
 
     if request.method == "POST":
 
-        pin = request.POST.get("pin")
+        profile.fullname = request.POST.get("fullname")
+        profile.phone = request.POST.get("phone")
+        profile.email = request.POST.get("email")
 
-        profile = Profile.objects.get(
-            user=request.user
-        )
+        profile.save()
 
-        if profile.pin != pin:
-
-            messages.error(
-                request,
-                "INVALID PIN"
-            )
-
-            return redirect(
-                "confirm_electricity"
-            )
-
-        wallet = Wallet.objects.get(
-            user=request.user
-        )
-
-        amount_decimal = Decimal(amount)
-
-        if wallet.balance < amount_decimal:
-
-            messages.error(
-                request,
-                "INSUFFICIENT BALANCE"
-            )
-
-            return redirect(
-                "confirm_electricity"
-            )
-
-        url = "https://www.nellobytesystems.com/APIElectricityV1.asp"
-
-
-        profile = Profile.objects.get(
-             user=request.user
-         )
-        phone = profile.phone
-
-        params = {
-            "UserID": "CK101279181",
-            "APIKey": "08EOIW2O832323D6I47D7643W3HX0V3SERO2U9A5ZX1JKTQ4M5ST7VSN94L777E5",
-            "ElectricCompany": company,
-            "MeterType": meter_type,
-            "MeterNo": meter_no,
-            "Amount": amount,
-            "PhoneNo": phone,
-            "RequestID": f"{request.user.id}-{meter_no}"
-        }
-
-        response = requests.get(
-            url,
-            params=params
-        )
-
-        data = response.json()
-
-        print(data)
-
-        if data.get("status") == "ORDER_RECEIVED":
-
-            wallet.balance -= amount_decimal
-            wallet.save()
-
-            messages.success(
-                request,
-                "Electricity Bill Successful"
-            )
-
-            return redirect(
-                "electricity_success"
-            )
-
-        messages.error(
+        messages.success(
             request,
-            data.get(
-                "status",
-                "Transaction Failed"
-            )
+            "Profile updated successfully."
         )
 
-        return redirect(
-            "confirm_electricity"
-        )
+        return redirect("content")
 
     context = {
-        "company": company,
-        "meter_type": meter_type,
-        "meter_no": meter_no,
-        "phone": phone,
-        "amount": amount,
-        "customer_name": customer_name,
+        "profile": profile
     }
 
     return render(
         request,
-        "confirm_electricity.html",
+        "edit_profile.html",
         context
     )
 
+
+@login_required
+def reset_pin(request):
+
+    profile = request.user.profile
+
+    if request.method == "POST":
+
+        old_pin = request.POST.get("old_pin")
+        new_pin = request.POST.get("new_pin")
+        confirm_pin = request.POST.get("confirm_pin")
+
+        if profile.pin != old_pin:
+
+            messages.error(
+                request,
+                "Old PIN is incorrect."
+            )
+
+            return redirect("reset_pin")
+
+        if new_pin != confirm_pin:
+
+            messages.error(
+                request,
+                "New PIN and Confirm PIN do not match."
+            )
+
+            return redirect("reset_pin")
+
+        profile.pin = new_pin
+        profile.save()
+
+        messages.success(
+            request,
+            "Transaction PIN changed successfully."
+        )
+
+        return redirect("content")
+
+    return render(
+        request,
+        "reset_pin.html"
+    )
+
+
+@login_required
+def change_password(request):
+
+    if request.method == "POST":
+
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+        confirm_password = request.POST.get("confirm_password")
+
+        user = request.user
+
+        if not user.check_password(old_password):
+
+            messages.error(
+                request,
+                "Current password is incorrect."
+            )
+
+            return redirect("change_password")
+
+        if new_password != confirm_password:
+
+            messages.error(
+                request,
+                "Passwords do not match."
+            )
+
+            return redirect("change_password")
+
+        user.set_password(new_password)
+        user.save()
+
+        update_session_auth_hash(request, user)
+
+        messages.success(
+            request,
+            "Password changed successfully."
+        )
+
+        return redirect("content")
+
+    return render(
+        request,
+        "change_password.html"
+    )
+
+
+@login_required
+def contact_support(request):
+
+    return render(
+        request,
+        "contact_support.html"
+    )
+
+
+@login_required
+def help_center(request):
+
+    return render(
+        request,
+        "help_center.html"
+    )
+
+
+@login_required
+def about(request):
+
+    return render(
+        request,
+        "about.html"
+    )
+
+
+@login_required
+def privacy_policy(request):
+
+    return render(
+        request,
+        "privacy_policy.html"
+    )
+
+@login_required
+def terms_conditions(request):
+
+    return render(
+        request,
+        "terms_conditions.html"
+    )

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .profile-card{
+    width:95%;
+    max-width:1200px;
+    margin:30px auto;
+
+    background:linear-gradient(135deg,#6a0dad,#8f5cff);
+
+    border-radius:25px;
+
+    padding:45px;
+
+    text-align:center;
+
+    color:white;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.profile-photo{
+
+    width:170px;
+    height:170px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:5px solid white;
+
+    margin-bottom:15px;
+}
+
+.profile-card h2{
+
+    font-size:38px;
+
+    font-weight:700;
+
+    margin-bottom:5px;
+}
+
+.profile-card p{
+
+    font-size:30px;
+
+    opacity:.9;
+
+    margin-bottom:25px;
+}
+
+.change-photo-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    text-decoration:none;
+
+    background:white;
+
+    color:#6a0dad;
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+    font-size: 18px;
+
+    transition:.3s;
+}
+
+.change-photo-btn:hover{
+
+    background:#f1f1f1;
+
+    transform:scale(1.05);
+
+    color:#6a0dad;
+}
+
+/* account section */
+
+.container{
+    width:95%;
+    max-width:900px;
+    margin:auto;
+}
+
+.section-title{
+    font-size:24px;
+    font-weight:bold;
+    margin:35px 0 15px;
+    color:#444;
+}
+
+.menu-card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.menu-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    text-decoration:none;
+    color:#222;
+
+    padding:22px 25px;
+
+    border-bottom:1px solid #eee;
+
+    transition:.3s;
+}
+
+.menu-item:last-child{
+    border-bottom:none;
+}
+
+.menu-item:hover{
+    background: #f9f9f9;
+}
+
+.menu-left{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.menu-left i{
+    font-size:24px;
+    color:#6C63FF;
+}
+
+.menu-left span{
+    font-size:18px;
+}
+
+.menu-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.menu-right i{
+    color:#888;
+}
+
+.status{
+    color:green;
+    font-weight:bold;
+}
+
+/* about security */
+
+.coming{
+
+    background:#ede9fe;
+
+    color:#6C63FF;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+
+/* about logout */
+.logout-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    width:100%;
+
+    height:60px;
+
+    background: indigo;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:15px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.logout-btn:hover{
+
+    background:#bb2d3b;
+
+    color:white;
+
+}
+
+.messages{
+    justify-self: center;
+    font-size: 30px;
+    font-weight: bold;
+    color:green;
+}
+
+</style>
+    <link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div class = "messages">
+    {% if messages %}
+
+    {% for message in messages %}
+
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+</div>
+
+    <div class="profile-card">
+
+    <img src="{{ request.user.profile.image.url }}" class="profile-photo">
+
+    <h2>{{ request.user.profile.fullname }}</h2>
+
+    <p>{{ request.user.profile.phone }}</p>
+
+    <a href="{% url 'change_photo' %}" class="change-photo-btn">
+        <i class="bi bi-camera"></i>
+        Change Photo
+    </a>
+
+</div>
+
+
+
+<!-- ACCOUNT -->
+<div class="section-title">Account</div>
+
+<div class="menu-card">
+
+    <a href="#" class="menu-item">
+        <div class="menu-left">
+            <i class="bi bi-wallet2"></i>
+            <span>Wallet Balance</span>
+        </div>
+
+        <div class="menu-right">
+            <strong>₦{{ wallet.balance }}</strong>
+            <i class="bi bi-chevron-right"></i>
+        </div>
+    </a>
+
+    <a href="#" class="menu-item">
+        <div class="menu-left">
+            <i class="bi bi-patch-check-fill"></i>
+            <span>Account Status</span>
+        </div>
+
+        <div class="menu-right">
+            <span class="status">Active</span>
+            <i class="bi bi-chevron-right"></i>
+        </div>
+    </a>
+
+    <a href="#" class="menu-item">
+        <div class="menu-left">
+            <i class="bi bi-envelope"></i>
+            <span>Email Address</span>
+        </div>
+
+        <div class="menu-right">
+            <small>{{ profile.email }}</small>
+            <i class="bi bi-chevron-right"></i>
+        </div>
+    </a>
+
+    <a href="#" class="menu-item">
+        <div class="menu-left">
+            <i class="bi bi-telephone"></i>
+            <span>Phone Number</span>
+        </div>
+
+        <div class="menu-right">
+            <small>{{ profile.phone }}</small>
+            <i class="bi bi-chevron-right"></i>
+        </div>
+    </a>
+
+</div>
+
+
+<!-- about security -->
+
+<div class="section-title">Security</div>
+
+<div class="menu-card">
+
+    <a href="{% url 'edit_profile'%}" class="menu-item">
+
+        <div class="menu-left">
+            <i class="bi bi-person"></i>
+            <span>Edit Profile</span>
+        </div>
+
+        <div class="menu-right">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </a>
+
+
+    <a href="#" class="menu-item">
+
+        <div class="menu-left">
+            <i class="bi bi-camera"></i>
+            <span>Change Photo</span>
+        </div>
+
+        <div class="menu-right">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </a>
+
+
+    <a href="{% url 'change_password' %}" class="menu-item">
+
+        <div class="menu-left">
+            <i class="bi bi-lock"></i>
+            <span>Change Password</span>
+        </div>
+
+        <div class="menu-right">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </a>
+
+
+    <a href="{% url 'reset_pin' %}" class="menu-item">
+
+        <div class="menu-left">
+            <i class="bi bi-shield-lock"></i>
+            <span>Reset Transaction PIN</span>
+        </div>
+
+        <div class="menu-right">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </a>
+
+
+    <a href="#" class="menu-item">
+
+        <div class="menu-left">
+            <i class="bi bi-shield-check"></i>
+            <span>Two-Factor Authentication</span>
+        </div>
+
+        <div class="menu-right">
+            <span class="coming">Soon</span>
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- ================= SUPPORT ================= -->
+
+<div class="section-title">
+
+    Support
+
+</div>
+
+<div class="menu-card">
+
+    <a href="{% url 'contact_support'%}" class="menu-item">
+
+        <div class="menu-left">
+
+            <i class="bi bi-headset"></i>
+
+            <span>Contact Support</span>
+
+        </div>
+
+        <div class="menu-right">
+
+            <i class="bi bi-chevron-right arrow"></i>
+
+        </div>
+
+    </a>
+
+    <a href="{% url 'help_center' %}" class="menu-item">
+
+        <div class="menu-left">
+
+            <i class="bi bi-question-circle"></i>
+
+            <span>Help Center</span>
+
+        </div>
+
+        <div class="menu-right">
+
+            <i class="bi bi-chevron-right arrow"></i>
+
+        </div>
+
+    </a>
+
+    <a href="{% url 'about-B2DATA' %}" class="menu-item">
+
+        <div class="menu-left">
+
+            <i class="bi bi-info-circle"></i>
+
+            <span>About B2DATA</span>
+
+        </div>
+
+        <div class="menu-right">
+
+            <i class="bi bi-chevron-right arrow"></i>
+
+        </div>
+
+    </a>
+
+    <a href="{% url 'terms_conditions' %}" class="menu-item">
+
+        <div class="menu-left">
+
+            <i class="bi bi-file-earmark-text"></i>
+
+            <span>Terms & Conditions</span>
+
+        </div>
+
+        <div class="menu-right">
+
+            <i class="bi bi-chevron-right arrow"></i>
+
+        </div>
+
+    </a>
+
+    <a href="{% url 'privacy_policy' %}" class="menu-item">
+
+        <div class="menu-left">
+
+            <i class="bi bi-shield-check"></i>
+
+            <span>Privacy Policy</span>
+
+        </div>
+
+        <div class="menu-right">
+
+            <i class="bi bi-chevron-right arrow"></i>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+
+<div class="logout-section">
+
+    <a href="{% url 'logout' %}" class="logout-btn">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        Logout
+
+    </a>
+
+</div>
+
+
+</body>
+</html>

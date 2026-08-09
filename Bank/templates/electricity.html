@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electricity</title>
 
-    <style>
-        body{
+    <!-- <style> -->
+        /* body{
     background:#fff;
     font-family:Arial,sans-serif;
     padding:20px;
@@ -66,14 +66,14 @@ input[type="radio"]:checked + .btn-type{
     font-weight:bold;
     margin-top:30px;
 }
-    </style>
+    </style> */
 </head>
 <body>
    <form method="POST">
     {% csrf_token %}
 
     <!-- Company -->
-    <div class="input-group">
+    <!-- <div class="input-group">
         <label>Select Biller</label>
         <select name="company">
             <option value="04">Kano Electric</option>
@@ -81,38 +81,136 @@ input[type="radio"]:checked + .btn-type{
             <option value="02">Ikeja Electric</option>
             <option value="03">Abuja Electric</option>
         </select>
-    </div>
+    </div> -->
 
     <!-- Meter Type -->
-    <div class="meter-type">
+    <!-- <div class="meter-type">
         <input type="radio" name="meter_type" value="02" id="postpaid" checked hidden>
         <label for="postpaid" class="btn-type">POSTPAID</label>
 
         <input type="radio" name="meter_type" value="01" id="prepaid" hidden>
         <label for="prepaid" class="btn-type">PREPAID</label>
-    </div>
+    </div> -->
 
     <!-- Meter Number -->
-    <div class="input-group">
+    <!-- <div class="input-group">
         <label>Meter Number</label>
         <input type="text"
                name="meter_no"
                placeholder="Meter Number">
-    </div>
+    </div> -->
 
     <!-- Amount -->
-    <div class="input-group">
+    <!-- <div class="input-group">
         <input type="number"
                name="amount"
                placeholder="Amount">
-    </div>
+    </div> -->
 
-    <button type="submit" class="next-btn">
+    <!-- <button type="submit" class="next-btn">
         Next
     </button>
 
-</form>
+</form> -->
 
 
+
+
+<select name="company" id="company" required>
+    <option value="">Select Company</option>
+    <option value="04">Kano Electric</option>
+    <option value="01">Eko Electric</option>
+    <option value="02">Ikeja Electric</option>
+</select>
+
+<select name="meter_type" id="meter_type" required>
+    <option value="">Meter Type</option>
+    <option value="01">Prepaid</option>
+    <option value="02">Postpaid</option>
+</select>
+
+<input
+type="text"
+id="meter_no"
+name="meter_no"
+placeholder="Meter Number"
+required>
+
+<div id="customer_name"></div>
+
+<input
+type="number"
+name="amount"
+required>
+
+<button
+id="nextBtn"
+disabled>
+Next
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+const meter=document.getElementById("meter_no");
+
+meter.addEventListener("blur",function(){
+
+    verifyMeter();
+
+});
+
+
+
+function verifyMeter(){
+
+const company=
+document.getElementById("company").value;
+
+const meterType=
+document.getElementById("meter_type").value;
+
+const meterNo=
+document.getElementById("meter_no").value;
+
+fetch(`/verify-meter/?company=${company}&meter_type=${meterType}&meter_no=${meterNo}`)
+
+.then(response=>response.json())
+
+.then(data=>{
+
+if(data.customer_name=="INVALID_METERNO"){
+
+document.getElementById("customer_name").innerHTML=
+"<span style='color:red;'>Invalid Meter Number</span>";
+
+document.getElementById("nextBtn").disabled=true;
+
+}
+
+else{
+
+document.getElementById("customer_name").innerHTML=
+"<span style='color:green;'>"+data.customer_name+"</span>";
+
+document.getElementById("nextBtn").disabled=false;
+
+}
+
+});
+
+}
+</script>
 </body>
 </html>

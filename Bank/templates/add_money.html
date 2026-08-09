@@ -6,50 +6,120 @@
     <title>Document</title>
     <style>
 
-        body{
-          background: #f3f3f3;
-        }
+       
+
+background:#f5f5f5;
+    font-family:Arial, sans-serif;
+}
+
+.top-info{
+    text-align:center;
+    margin-top:30px;
+}
+
+.top-info h3{
+    color:indigo;
+}
+
+.amount-display{
+    text-align:center;
+    margin-top:50px;
+}
+
+.amount-display h1{
+    font-size:60px;
+    font-weight:bold;
+}
+
+.amount-display p{
+    color:#8a4fff;
+    font-size:24px;
+}
+
+.amount-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    max-width:800px;
+    margin:50px auto;
+}
+
+.amount-box{
+    background:white;
+    height:120px;
+    border-radius:20px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:32px;
+    font-weight:bold;
+
+    cursor:pointer;
+    border:2px solid #eee;
+    
+}
+
+.amount-box.active{
+    border:3px solid indigo;
+}
+
+.continue-btn{
+    display:block;
+    margin:50px auto;
+
+    width:400px;
+    height:70px;
+
+    background:indigo;
+    color:white;
+    border:none;
+    border-radius:15px;
+
+    font-size:24px;
+}
 
 
-        .container{
-            width: 1000px;
-            border: 1px solid;
-            padding: 10px;
-            margin: 10px;
-            justify-content: space-between;
-            gap: 20px;
-            border: none;
-            background-color: white;
-            border-radius: 10px;
-            
-            
-            
-        }
 
-        .hajara{
-            width: 100px;
-            height: 100px;
-            font-size: large;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 15px;
-            border-color: green;
-        }
 
-        .one{
-            justify-self: center;
-            text-align: center;
 
-        }
-        input{
-            width: 1000px;
-            height: 100px;
-            font-size: large;
-            text-align: center;
-            background: white;
-            
-            
-        }
+.amount-input{
+    border:none;
+    background:transparent;
+    font-size:60px;
+    font-weight:bold;
+    width:220px;
+    outline:none;
+    color:black;
+    
+}
+
+
+.amount-display{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:indigo;
+    padding:20px;
+}
+
+.naira-sign{
+    color:white;
+    font-size:60px;
+    font-weight:bold;
+}
+
+.amount-display input{
+    color: white;
+}
+
+.amount-display span{
+    color: white;
+    justify-self: center;
+}
+
+
     </style>
 </head>
 <body>
@@ -57,26 +127,92 @@
     <form method="POST">
         {% csrf_token %}
 
-               
-        <input type="text" name="amount" placeholder = "Enter Amount"><br><br>
+        <div  class="amount-display">
+        <span class="naira-sign"> ₦</span>
+        <input type="text" name="amount" id="amountInput" value="100" class="amount-input" required>
+        </div>
 
-        <div class="container">
-        <div class="hajara"> onclick="document.querySelector('input[name=amount]').value = 500">500</div>
-         <di class="button">onclick="document.querySelector('input[name=amount]').value = 1000">1000</div>
-        <div class="button"> onclick="document.querySelector('input[name=amount]').value = 1500">1500 </div>
-        <button onclick="document.querySelector('input[name=amount]').value = 2000">2000</button>
-    
+
+        <div class="amount-grid">
+          <!-- <div class="amount-box active" data-amount="100">
+            ₦100
+        </div> -->
+
+           <div class="amount-box active" data-amount="100">
+              ₦100
+           </div>
+           <div class="amount-box active" data-amount ="200">
+               ₦200
+           </div>
+           
+           <div class="amount-box active" data-amount ="300">
+             ₦300
+           </div>
+
+           <div class="amount-box active" data-amount ="500">
+            ₦500
+           </div>
+           <div class="amount-box active" data-amount ="1000">
+            ₦1000
+           </div>
+
+           <div class="amount-box active" data-amount ="2000">
+            ₦2000
+           </div>
         
         </div>
         <br><br>
         
-        <button type = "submit" style="width: 500px; background-color: indigo; color: white;"> Add Money</button>
+        <button type = "submit" style="width: 500px; background-color: indigo; color: white;" class="continue-btn"> Add Money</button>
 
     </form>
               </div>
 
 
+<script>
+    // const amountBox = document.querySelectorAll(".amount-box");
+    // const amountInput = document.getElementById(".amount-input");
 
+    // amountBox.forEach(box => {
+    //     box.addEventListener('click', function() {
+    //         amountBox.forEach(item => {
+    //           item.classList.remove(".active");
+    //         });
+
+    //         this.classList.add(".active")
+
+    //     amountInput.value =
+    //     this.dataset.amount;
+ 
+
+    //     })
+    // })
+
+
+    const amountBoxes =
+document.querySelectorAll(".amount-box");
+
+const amountInput =
+document.getElementById("amountInput");
+
+amountBoxes.forEach(box => {
+
+    box.addEventListener("click", function(){
+
+        amountBoxes.forEach(item => {
+            item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+        amountInput.value =
+        this.dataset.amount;
+
+    });
+
+});
+
+</script>
     
 </body>
 </html>

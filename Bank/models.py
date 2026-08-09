@@ -32,13 +32,26 @@ class Transfer(models.Model):
     
 
 class Transaction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    transactiontype =models.CharField(max_length=50)
-    sender = models.CharField(max_length=100, blank=True, null=True )
-    reciever =models.CharField(max_length=100, blank=True, null=True)
-    account_number = models.CharField(max_length=20, blank=True, null=True)
-    reference = models.CharField(max_length=100, blank=True, null=True)
-    status = models.CharField(max_length=20, default="Pending")
-    # create_at = models.CharField(auto_now_add=True)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    transactiontype = models.CharField(max_length=50)
+
+    sender = models.CharField(max_length=100, blank=True, null=True)
+
+    receiver = models.CharField(max_length=100, blank=True, null=True)
+
+    account_number = models.CharField(max_length=20, blank=True, null=True)
+
+    network = models.CharField(max_length=50, blank=True, null=True)
+    
+    reference = models.CharField(max_length=100, blank=True, null=True)
+
+    status = models.CharField(max_length=20, default="Pending")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.transactiontype} - ₦{self.amount}"
